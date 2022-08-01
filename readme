@@ -1,9 +1,0 @@
-Details on my dynamic GPU passthrough setup. 
-
-There are a lot of guides to get started with GPU passthrough using driver blacklists, kernel modifiers. This works quite well, but one issue is the generally poor power management of the gpu device (at least on nvidia). 
-
-Seeing the documentation regarding managed="yes" it seems libvirt has the functionality to manage the pci devices itself. On the backend using "virsh detach" and "virsh reattach". The issue is x11 binding to the GPU at startup, which makes it hard to change drivers to vfio-pci. Thanks to _placeholder_ there is a solution. Edit the startup procedure for the display manager to run "virsh detach pci" before x11 can bind to it. This will enable you to login and the GPU will be bound to vfio-pci. However libvirt management wont by itself reset it to the nvidia drivers which have better power management. So a solution for me was to create a oneshot service that runs a script "virsh reattach pci" 15 seconds after boot. 
-
-This enables good power management for the card, easy binding/unbinding by virt-manager.  
-
-

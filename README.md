@@ -30,9 +30,10 @@ ExecStart=/usr/bin/bind-gpu-to-nvidia
 WantedBy=multi-user.target
 ```
 
-´´´
+```
 !/bin/bash
 virsh nodedev-reattach pci_0000_0a_00_0
 virsh nodedev-reattach pci_0000_0a_00_1
 ```
+
 This enables good power management for the card, easy binding/unbinding by virt-manager.  
